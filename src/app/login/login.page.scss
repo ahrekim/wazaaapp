@@ -1,0 +1,29 @@
+#container {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+ion-input {
+  background-color: var(--ion-color-secondary) !important;
+  color: white;
+  padding: 5px !important;
+  border-radius: 5px;
+  padding-right: 15px;
+}
+
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+h1 {
+  font-size: 38px;
+}
+h2 {
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}

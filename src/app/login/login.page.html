@@ -1,0 +1,25 @@
+
+<ion-content [fullscreen]="true" color="light">
+
+  <div id="container" class="container">
+    <h1>
+      Wazaaapp
+    </h1>
+    <h2>
+      Know what's up
+    </h2>
+    <form role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-label>
+          Email
+        </ion-label>
+        <ion-input formControlName="email" type="text" class="form-control"></ion-input>
+        <ion-label>
+          Password
+        </ion-label>
+        <ion-input formControlName="password" type="password" class="form-control"></ion-input>
+      <ion-button color="primary" type="submit" expand="block" class="ion-margin-top" [disabled]="!form.valid">
+        Login
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
