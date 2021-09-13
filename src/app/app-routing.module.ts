@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { HomePage } from './home/home.page';
 import { LoginPage } from './login/login.page';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {path: 'login', component: LoginPage},
-  {path: 'home', component: HomePage, canActivate:[AuthGuardGuard]},
+  {path: 'navbar', component: NavbarComponent, canActivate:[AuthGuardGuard], children: [
+    {path: 'home', component: HomePage, canActivate:[AuthGuardGuard]}
+  ]},
 ];
 
 @NgModule({

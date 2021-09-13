@@ -10,11 +10,17 @@ import { LoginPage } from './login/login.page';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { HomePage } from './home/home.page';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPage
+    LoginPage,
+    HomePage,
+    NavbarComponent
   ],
   entryComponents: [],
   imports: [
@@ -23,9 +29,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LeafletModule,
   ],
   providers: [
+    Geolocation,
     AuthGuardGuard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

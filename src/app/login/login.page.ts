@@ -49,7 +49,7 @@ export class LoginPage {
           console.log(user);
           this.authenticationService.setStoredUser(user);
           // redirect to auth routes
-          this.router.navigateByUrl("/auth/dashboard");
+          this.router.navigateByUrl("/navbar");
         },
         error => {
           this.toaster.addMessage({id: null, message: "Login failed", type: "danger"});

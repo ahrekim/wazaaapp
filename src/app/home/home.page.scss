@@ -1,3 +1,4 @@
+
 #container {
   text-align: center;
 
@@ -24,4 +25,36 @@
 
 #container a {
   text-decoration: none;
+}
+
+.map-container {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--ion-color-tertiary);
+}
+
+.drapery {
+	background-color: var(--ion-color-primary);
+	width: 100%;
+	position: fixed;
+	top:0;
+	z-index: 999;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	transition: height 1s;
+}
+
+.drapery.closed{
+	height: 100%;
+}
+.drapery.opened{
+	height: 80px;
+}
+
+.map-title {
+  font-size: 14px;
+}
+
+.map-text {
+  font-size: 12px;
 }

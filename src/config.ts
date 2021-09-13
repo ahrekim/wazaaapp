@@ -1,1 +1,1 @@
-export const API_BASE_URL = "http://wazaaapp-backend.local";
+export const API_BASE_URL = "http://www.wazaaapp-backend.local";

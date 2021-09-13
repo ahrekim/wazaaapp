@@ -13,6 +13,8 @@ export class Happenings {
     invites: Invites[];
     head_count: number;
     head_count_confirmed: number;
+    latitude: number;
+    longitude: number;
 }
 export class Invites {
     id: number;
