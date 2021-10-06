@@ -14,13 +14,15 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { HomePage } from './home/home.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CreateHappeningsComponent } from './create/create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPage,
     HomePage,
-    NavbarComponent
+    NavbarComponent,
+    CreateHappeningsComponent
   ],
   entryComponents: [],
   imports: [

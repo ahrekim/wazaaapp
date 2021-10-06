@@ -39,8 +39,8 @@
 	position: fixed;
 	top:0;
 	z-index: 999;
-	border-bottom-left-radius: 20px;
-	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 	transition: height 1s;
 }
 
@@ -48,7 +48,10 @@
 	height: 100%;
 }
 .drapery.opened{
-	height: 80px;
+	height: 55px;
+}
+.drapery.show-advanced{
+  height: 50%;
 }
 
 .map-title {
@@ -57,4 +60,12 @@
 
 .map-text {
   font-size: 12px;
+}
+
+.fab-padding-bottom {
+  margin-bottom: 5em;
+}
+
+.drapery-toolbar{
+  margin-top: 4px;
 }

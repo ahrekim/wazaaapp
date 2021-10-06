@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardGuard } from './auth-guard.guard';
+import { CreateHappeningsComponent } from './create/create.component';
 import { HomePage } from './home/home.page';
 import { LoginPage } from './login/login.page';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -8,13 +9,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'navbar',
     pathMatch: 'full'
   },
   {path: 'login', component: LoginPage},
   {path: 'navbar', component: NavbarComponent, canActivate:[AuthGuardGuard], children: [
     {path: 'home', component: HomePage, canActivate:[AuthGuardGuard]}
-  ]},
+  ]}
 ];
 
 @NgModule({

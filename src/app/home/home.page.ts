@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { PublicEventsService } from '../public-events.service';
 import * as L from 'leaflet';
+import { ModalController } from '@ionic/angular';
+import { CreateHappeningsComponent } from '../create/create.component';
 
 
 @Component({
@@ -14,17 +16,32 @@ export class HomePage implements OnInit {
   loading: boolean = true;
   mapOptions: any = null;
   myMap: any;
+  timeFilter: string;
+  markerLayer: any;
+
+  advancedSettingsOpen: boolean = false;
 
   constructor(
     private geolocation: Geolocation,
-    private api: PublicEventsService
-  ) {}
+    private api: PublicEventsService,
+    private modalController: ModalController
+  ) {
+    this.timeFilter = "today";
+  }
+
+  async createHappening() {
+    const modal = await this.modalController.create({
+      component: CreateHappeningsComponent,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
 
   initmap(latitude: number, longitude: number){
     setTimeout(() => {
       this.myMap = L.map('map', {
         zoomControl: false,
-      }).setView([latitude, longitude], 11);
+      }).setView([latitude, longitude], 14);
       L.tileLayer('http://tiles.hel.ninja/styles/hel-osm-light/{z}/{x}/{y}@2x@fi.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.myMap);
@@ -45,13 +62,21 @@ export class HomePage implements OnInit {
   }
 
   getPublicEvents(){
-    this.api.getPublicEvents().subscribe(response => {
+    if(this.markerLayer){
+      this.markerLayer.clearLayers();
+    }
+    this.markerLayer = L.layerGroup().addTo(this.myMap);
+    this.api.getPublicEvents(this.timeFilter).subscribe(response => {
       response.forEach(marker => {
-        console.log(marker);
-        L.marker([marker.longitude, marker.latitude]).addTo(this.myMap)
+        L.marker([marker.longitude, marker.latitude]).addTo(this.markerLayer)
         .bindPopup('<strong>'+marker.happening_name +'</strong></br>' + marker.happening_information + '</br>'+marker.happening_starts+' - '+marker.happening_ends);
       })
     });
   }
 
+  setTimeFilter(event){
+    console.log(event.detail.value);
+    this.timeFilter = event.detail.value;
+    this.getPublicEvents();
+  }
 }

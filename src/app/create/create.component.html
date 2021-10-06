@@ -1,0 +1,54 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Create Happening</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="ion-padding">
+  
+  <div class="content">
+    <form role="form" [formGroup]="form" (ngSubmit)="saveHappening()">
+      <label for="">
+        Happening type
+      </label>
+      <input formControlName="happening_type" type="text" class="form-control">
+      
+      <label for="">
+        Happening name
+      </label>
+      <input formControlName="happening_name" type="text" class="form-control">
+ 
+      <label for="">
+        Happening information
+      </label>
+      <textarea formControlName="happening_information" class="form-control" id="" cols="30" rows="5"></textarea>
+   
+      <label for="">
+        Happening starts
+      </label>
+      <input formControlName="happening_starts" type="text" class="form-control" placeholder="Ex: 31.1.1970 00:00">
+    
+      <label for="">
+        Happening ends
+      </label>
+      <input formControlName="happening_ends" type="text" class="form-control" placeholder="Ex: 31.1.1970 00:00">
+      
+      <label for="">
+        Address
+      </label>
+      <input formControlName="street_address" type="text" class="form-control" placeholder="Street">
+      <div class="input-group mt-1">
+        <input formControlName="zipcode" type="text" class="form-control" placeholder="Zipcode">
+        <input formControlName="city" type="text" class="form-control" placeholder="City">
+      </div>
+      <button type="submit" class="btn btn-primary w-100 mt-4 mb-4" [disabled]="!form.valid">
+        Save happening
+      </button>
+    </form>
+  </div>
+
+</ion-content>

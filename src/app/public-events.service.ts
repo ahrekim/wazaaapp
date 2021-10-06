@@ -11,8 +11,8 @@ export class PublicEventsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPublicEvents(): Observable<Happenings[]> {
-    const url = API_BASE_URL + '/api/public/events';
+  getPublicEvents(filter: string): Observable<Happenings[]> {
+    const url = API_BASE_URL + '/api/public/events/'+filter;
     return this.httpClient.get<Happenings[]>(url);
   }
 }

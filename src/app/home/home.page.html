@@ -1,7 +1,34 @@
 <ion-content [fullscreen]="true" scroll="false">
   <div id="container">
     <div id="map" class="map-container"></div>
-    <div class="drapery" [class.closed]="loading == true" [class.opened]="loading == false">
-  </div>
+    <div class="drapery" [class.closed]="loading == true" [class.opened]="loading == false" [class.show-advanced]="loading == false && advancedSettingsOpen == true">
+      <div class="drapery-toolbar" *ngIf="!loading">
+        <ion-toolbar color="primary" mode="ios">
+          <ion-segment value="{{timeFilter}}" (ionChange)="setTimeFilter($event)">
+            <ion-segment-button value="today">
+              <ion-label>Today</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="tomorrow">
+              <ion-label>Tomorrow</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="upcoming">
+              <ion-label>Upcoming</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-buttons slot="end">
+            <ion-button (click)="advancedSettingsOpen = !advancedSettingsOpen">
+              <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </div>
+    </div>
+      <!-- fab placed to the bottom and start and on the bottom edge of the content overlapping footer with a list to the right -->
+
+      <ion-fab horizontal="end" vertical="bottom" slot="fixed" class="fab-padding-bottom" >
+        <ion-fab-button color="dark" (click)="createHappening()">
+          <ion-icon md="add" ios="chevron-back-circle-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
   </div>
 </ion-content>
