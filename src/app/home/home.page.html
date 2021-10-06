@@ -17,7 +17,8 @@
           </ion-segment>
           <ion-buttons slot="end">
             <ion-button (click)="advancedSettingsOpen = !advancedSettingsOpen">
-              <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+              <ion-icon slot="icon-only" name="cog-outline" *ngIf="!advancedSettingsOpen"></ion-icon>
+              <ion-icon slot="icon-only" name="close-circle-outline" *ngIf="advancedSettingsOpen"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
