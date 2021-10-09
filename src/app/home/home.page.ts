@@ -4,6 +4,7 @@ import { PublicEventsService } from '../public-events.service';
 import * as L from 'leaflet';
 import { ModalController } from '@ionic/angular';
 import { CreateHappeningsComponent } from '../create/create.component';
+import { HappeningService } from 'src/services/happening.service';
 
 
 @Component({
@@ -19,11 +20,11 @@ export class HomePage implements OnInit {
   timeFilter: string;
   markerLayer: any;
 
-  advancedSettingsOpen: boolean = false;
+  advancedSettingsOpen:boolean;
 
   constructor(
     private geolocation: Geolocation,
-    private api: PublicEventsService,
+    private api: HappeningService,
     private modalController: ModalController
   ) {
     this.timeFilter = "today";
@@ -34,6 +35,10 @@ export class HomePage implements OnInit {
       component: CreateHappeningsComponent,
       cssClass: 'my-custom-class'
     });
+
+    modal.onDidDismiss().then(() => {
+      this.getMapEvents();
+    })
     return await modal.present();
   }
 
@@ -46,9 +51,8 @@ export class HomePage implements OnInit {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.myMap);
       this.loading = false;
-      this.getPublicEvents();
+      this.getMapEvents();
     }, 500);
-
   }
 
 
@@ -61,14 +65,14 @@ export class HomePage implements OnInit {
      });
   }
 
-  getPublicEvents(){
+  getMapEvents(){
     if(this.markerLayer){
       this.markerLayer.clearLayers();
     }
     this.markerLayer = L.layerGroup().addTo(this.myMap);
-    this.api.getPublicEvents(this.timeFilter).subscribe(response => {
+    this.api.getMapEvents(this.timeFilter).subscribe(response => {
       response.forEach(marker => {
-        L.marker([marker.longitude, marker.latitude]).addTo(this.markerLayer)
+        L.marker([marker.latitude, marker.longitude]).addTo(this.markerLayer)
         .bindPopup('<strong>'+marker.happening_name +'</strong></br>' + marker.happening_information + '</br>'+marker.happening_starts+' - '+marker.happening_ends);
       })
     });
@@ -77,6 +81,6 @@ export class HomePage implements OnInit {
   setTimeFilter(event){
     console.log(event.detail.value);
     this.timeFilter = event.detail.value;
-    this.getPublicEvents();
+    this.getMapEvents();
   }
 }

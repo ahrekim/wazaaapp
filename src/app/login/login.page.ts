@@ -45,14 +45,14 @@ export class LoginPage {
       data
       ).subscribe(
         user => {
-          this.toaster.addMessage({id: null, message: "Logged in!", type: "success"});
+          this.toaster.addMessage("Logged in!");
           console.log(user);
           this.authenticationService.setStoredUser(user);
           // redirect to auth routes
           this.router.navigateByUrl("/navbar");
         },
         error => {
-          this.toaster.addMessage({id: null, message: "Login failed", type: "danger"});
+          this.toaster.addMessage("Login failed");
           console.log(error.message);
           this.form.enable();
       }

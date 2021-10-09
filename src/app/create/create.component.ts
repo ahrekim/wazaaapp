@@ -9,6 +9,9 @@ import { Happenings } from 'src/models/happenings';
 import { Invites } from 'src/models/happenings';
 import { ToastMessage } from 'src/models/ToastMessage';
 import { ModalController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+import * as L from 'leaflet';
+import { GeocodingService } from 'src/services/geocoding.service';
 
 @Component({
   selector: 'create',
@@ -19,6 +22,13 @@ export class CreateHappeningsComponent implements OnInit {
 
   happening: Happenings = new Happenings;
   form: FormGroup;
+  myMap: L.Map;
+  minDate: string;
+  showMap: boolean = false;
+  searchDelay: any;
+  lat: number = null;
+  lon: number = null;
+  locationMarker: L.Marker;
 
   constructor(
     private happeningService: HappeningService,
@@ -26,9 +36,38 @@ export class CreateHappeningsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toast: ToasterService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private datePipe: DatePipe,
+    private geocoding: GeocodingService
   ) {
+    this.minDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+  }
 
+  initmap(latitude: number, longitude: number){
+    console.log("map:" + latitude+" "+longitude);
+    if(!this.showMap){
+      this.showMap = true;
+      setTimeout(() => {
+        this.myMap = L.map('mapcreate', {
+          zoomControl: false,
+        }).setView([latitude, longitude], 14);
+        L.tileLayer('http://tiles.hel.ninja/styles/hel-osm-light/{z}/{x}/{y}@2x@fi.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.myMap);
+
+        this.locationMarker = L.marker([latitude, longitude], {draggable: true}).addTo(this.myMap);
+        this.locationMarker.on("dragend", (data) => {
+          let newLatLng = data.target.getLatLng();
+          console.log(newLatLng);
+          this.lat = newLatLng.lat;
+          this.lon = newLatLng.lng;
+        })
+      }, 500);
+    } else {
+      // Map already shown set pin to this
+      this.locationMarker.setLatLng([latitude, longitude]);
+      this.myMap.setView([latitude, longitude], 14);
+    }
   }
 
   dismiss() {
@@ -42,7 +81,7 @@ export class CreateHappeningsComponent implements OnInit {
   initFormGroup() {
     this.happening.invites = [];
     this.form = new FormGroup({
-      happening_type: new FormControl(this.happening.happening_type, []),
+      public: new FormControl(this.happening.public, [Validators.required]),
       happening_name: new FormControl(this.happening.happening_name, [Validators.required]),
       happening_information: new FormControl(this.happening.happening_information, [Validators.required]),
       happening_starts: new FormControl(this.happening.happening_starts, [Validators.required]),
@@ -55,6 +94,31 @@ export class CreateHappeningsComponent implements OnInit {
 
   ngOnInit() {
     this.initFormGroup();
+    this.form.valueChanges.subscribe(formData => {
+      clearTimeout(this.searchDelay);
+      this.searchDelay = setTimeout(() => {
+        if(this.form.get('street_address').valid && this.form.get('zipcode').valid && this.form.get('city').valid){
+          this.happening.street_address = this.form.getRawValue().street_address;
+          this.happening.zipcode = this.form.getRawValue().zipcode;
+          this.happening.city = this.form.getRawValue().city;
+          // Try to get the address coords
+          this.geocoding.getCoordsForHappening(this.happening).subscribe(response => {
+            if(response.length){
+              // Get first entry
+              console.log(response[0].lat+", "+response[0].lon);
+              // If not same as previous
+              if(this.lat != response[0].lat && this.lon != response[0].lon){
+                // Save the coords
+                this.lat = response[0].lat;
+                this.lon = response[0].lon;
+                // Init the map
+                this.initmap(response[0].lat, response[0].lon);
+              }
+            }
+          })
+        }
+      }, 1000);
+    })
   }
 
   addInvite() {
@@ -68,28 +132,27 @@ export class CreateHappeningsComponent implements OnInit {
   }
 
   saveHappening() {
-
     // Set the form values to model
-    this.happening.happening_type = this.form.getRawValue().happening_type;
+    this.happening.public = this.form.getRawValue().public;
     this.happening.happening_name = this.form.getRawValue().happening_name;
     this.happening.happening_information = this.form.getRawValue().happening_information;
-    this.happening.happening_starts = this.form.getRawValue().happening_starts;
-    this.happening.happening_ends = this.form.getRawValue().happening_ends;
+    this.happening.happening_starts = this.datePipe.transform(Date.parse(this.form.getRawValue().happening_starts), "yyyy-MM-dd HH:mm");
+    this.happening.happening_ends = this.datePipe.transform(Date.parse(this.form.getRawValue().happening_ends), "yyyy-MM-dd HH:mm");
 
     this.happening.street_address = this.form.getRawValue().street_address;
     this.happening.zipcode = this.form.getRawValue().zipcode;
     this.happening.city = this.form.getRawValue().city;
 
+    // Set possible latlng
+    this.happening.latitude = this.lat;
+    this.happening.longitude = this.lon;
+
     this.happeningService.saveHappening(this.happening).subscribe(success => {
-      let message = new ToastMessage();
-      message.id = 1;
-      message.message = "Tapahtuma tallenettu";
-      message.type = "success";
-      this.toast.addMessage(message);
-      this.router.navigateByUrl("/auth/happenings");
+      this.toast.addMessage("Happening stored");
+      this.dismiss();
     }, error => {
       // Error
-
+      this.toast.addMessage("Error storing happening");
     })
   }
 }

@@ -17,6 +17,11 @@ export class HappeningService {
     const url = API_BASE_URL + '/api/auth/me';
     return this.httpClient.get<User>(url);
   }
+
+  getMapEvents(filter: string): Observable<Happenings[]> {
+    const url = API_BASE_URL + '/api/auth/events/'+filter;
+    return this.httpClient.get<Happenings[]>(url);
+  }
   
   getHappenings()
   {

@@ -12,10 +12,10 @@ export class ToasterService {
         private toastController: ToastController
     ) { }
 
-    async addMessage(message: ToastMessage) {
+    async addMessage(message: string) {
         
         const toast = await this.toastController.create({
-            message: message.message,
+            message: message,
             duration: 2000
           });
           toast.present();

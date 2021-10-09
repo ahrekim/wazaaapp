@@ -1,5 +1,6 @@
 export class Happenings {
     id: number;
+    public: boolean;
     uuid: string;
     happening_type: string;
     happening_name: string;

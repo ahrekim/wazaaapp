@@ -1,54 +1,71 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-title>Create Happening</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        Close
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content fullscreen class="ion-padding">
-  
-  <div class="content">
+<ion-toolbar color="secondary">
+  <ion-title color="tertiary">Create Happening</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="dismiss()">
+      <ion-icon color="tertiary" size="large" name="close-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content fullscreen class="ion-padding" color="secondary">
     <form role="form" [formGroup]="form" (ngSubmit)="saveHappening()">
-      <label for="">
-        Happening type
-      </label>
-      <input formControlName="happening_type" type="text" class="form-control">
-      
-      <label for="">
-        Happening name
-      </label>
-      <input formControlName="happening_name" type="text" class="form-control">
+
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Public happening
+        </ion-label>
+        <ion-select formControlName="public" type="text" class="form-control">'
+          <ion-select-option value="0">No</ion-select-option>
+          <ion-select-option value="1">Yes</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Happening name
+        </ion-label>
+        <ion-input formControlName="happening_name" type="text" class="form-control"></ion-input>
+      </ion-item>
  
-      <label for="">
-        Happening information
-      </label>
-      <textarea formControlName="happening_information" class="form-control" id="" cols="30" rows="5"></textarea>
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Happening information
+        </ion-label>
+        <ion-textarea formControlName="happening_information" class="form-control" id="" cols="30" rows="5"></ion-textarea>
+      </ion-item>
    
-      <label for="">
-        Happening starts
-      </label>
-      <input formControlName="happening_starts" type="text" class="form-control" placeholder="Ex: 31.1.1970 00:00">
-    
-      <label for="">
-        Happening ends
-      </label>
-      <input formControlName="happening_ends" type="text" class="form-control" placeholder="Ex: 31.1.1970 00:00">
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Happening starts
+        </ion-label>
+        <ion-datetime color="secondary" formControlName="happening_starts" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+      </ion-item>
       
-      <label for="">
-        Address
-      </label>
-      <input formControlName="street_address" type="text" class="form-control" placeholder="Street">
-      <div class="input-group mt-1">
-        <input formControlName="zipcode" type="text" class="form-control" placeholder="Zipcode">
-        <input formControlName="city" type="text" class="form-control" placeholder="City">
-      </div>
-      <button type="submit" class="btn btn-primary w-100 mt-4 mb-4" [disabled]="!form.valid">
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Happening ends
+        </ion-label>
+        <ion-datetime color="secondary" formControlName="happening_ends" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+      </ion-item>
+      
+      <ion-item color="secondary">
+        <ion-label position="floating">
+          Address
+        </ion-label>
+        <ion-input formControlName="street_address" type="text" class="form-control" placeholder="Street"></ion-input>
+        <ion-input formControlName="zipcode" type="text" class="form-control" placeholder="Zipcode"></ion-input>
+        <ion-input formControlName="city" type="text" class="form-control" placeholder="City"></ion-input>
+      </ion-item>
+
+      <ion-card *ngIf="showMap" color="warning">
+        <ion-card-content>
+          You can specify a more exact location by dragging the pin on the map
+        </ion-card-content>
+      </ion-card>
+      <div *ngIf="showMap" id="mapcreate" class="map-container"></div>
+
+      <ion-button color="primary" expand="block" type="submit" class="ion-margin-top" [disabled]="!form.valid">
         Save happening
-      </button>
+      </ion-button>
     </form>
-  </div>
 
 </ion-content>

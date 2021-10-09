@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginPage } from './login/login.page';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { HomePage } from './home/home.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateHappeningsComponent } from './create/create.component';
+import { DatePipe } from '@angular/common';
+import { ApiRequestInterceptor } from './api-request.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,11 @@ import { CreateHappeningsComponent } from './create/create.component';
     LeafletModule,
   ],
   providers: [
+    DatePipe,
     Geolocation,
     AuthGuardGuard,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiRequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
