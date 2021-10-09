@@ -1,15 +1,17 @@
-<ion-toolbar color="secondary">
-  <ion-title color="tertiary">Create Happening</ion-title>
-  <ion-buttons slot="end">
-    <ion-button (click)="dismiss()">
-      <ion-icon color="tertiary" size="large" name="close-circle-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
-<ion-content fullscreen class="ion-padding" color="secondary">
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="tertiary">Create Happening</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon color="tertiary" size="large" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="ion-padding" color="tertiary">
     <form role="form" [formGroup]="form" (ngSubmit)="saveHappening()">
 
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Public happening
         </ion-label>
@@ -19,35 +21,35 @@
         </ion-select>
       </ion-item>
 
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Happening name
         </ion-label>
         <ion-input formControlName="happening_name" type="text" class="form-control"></ion-input>
       </ion-item>
  
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Happening information
         </ion-label>
         <ion-textarea formControlName="happening_information" class="form-control" id="" cols="30" rows="5"></ion-textarea>
       </ion-item>
    
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Happening starts
         </ion-label>
-        <ion-datetime color="secondary" formControlName="happening_starts" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+        <ion-datetime color="transparent" formControlName="happening_starts" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
       </ion-item>
       
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Happening ends
         </ion-label>
-        <ion-datetime color="secondary" formControlName="happening_ends" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+        <ion-datetime color="transparent" formControlName="happening_ends" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
       </ion-item>
       
-      <ion-item color="secondary">
+      <ion-item color="transparent">
         <ion-label position="floating">
           Address
         </ion-label>

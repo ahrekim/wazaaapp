@@ -17,6 +17,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CreateHappeningsComponent } from './create/create.component';
 import { DatePipe } from '@angular/common';
 import { ApiRequestInterceptor } from './api-request.interceptor';
+import { MeComponent } from './me/me.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ApiRequestInterceptor } from './api-request.interceptor';
     LoginPage,
     HomePage,
     NavbarComponent,
-    CreateHappeningsComponent
+    CreateHappeningsComponent,
+    MeComponent
   ],
   entryComponents: [],
   imports: [

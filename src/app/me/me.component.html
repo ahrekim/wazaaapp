@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="tertiary">Me</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="ion-padding" color="tertiary">
+<ng-container *ngIf="happenings && happenings.length">
+  <ion-card color="secondary" *ngFor="let happening of happenings">
+    <ion-card-header>
+      <ion-card-subtitle>{{ happening.city }}</ion-card-subtitle>
+      <ion-card-title>{{ happening.happening_name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ happening.happening_information }}
+    </ion-card-content>
+  </ion-card>
+
+</ng-container>
+</ion-content>
