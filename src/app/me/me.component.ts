@@ -8,7 +8,7 @@ import { HappeningService } from 'src/services/happening.service';
 import { Happenings } from 'src/models/happenings';
 import { Invites } from 'src/models/happenings';
 import { ToastMessage } from 'src/models/ToastMessage';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -21,14 +21,9 @@ export class MeComponent {
   happenings: Happenings[];
 
   constructor(
-    private happeningService: HappeningService,
     private authService: AuthenticationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private toast: ToasterService,
-    private modalController: ModalController,
-    private datePipe: DatePipe,
-    private api: HappeningService
+    private api: HappeningService,
+    private navCtrl: NavController
   ) {
   }
 
@@ -36,6 +31,11 @@ export class MeComponent {
     this.api.getHappenings().subscribe(happenings => {
       this.happenings = happenings;
     });
+  }
+
+  logout(){
+    this.authService.deleteUser();
+    this.navCtrl.navigateRoot('/login');
   }
 }
 

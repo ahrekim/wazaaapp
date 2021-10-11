@@ -11,8 +11,9 @@
 }
 .map-container {
     width: 100%;
-    height: 250px;
+    height: 30vh;
     background-color: var(--ion-color-tertiary);
+    margin-top: -10px;
 }
 
 ion-list{

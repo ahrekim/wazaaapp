@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/navbar/me"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="happening">{{ happening.happening_name }}</ion-title>
+    <ion-title *ngIf="!happening">Loading...</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-segment mode="ios" value="{{view}}" (ionChange)="toggleView($event)">
+      <ion-segment-button value="happening">
+        <ion-label>Happening</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="invites">
+        <ion-label>Invites</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen color="tertiary" *ngIf="view == 'happening'">
+  <div id="mapedit" class="map-container"></div>
+  <div class="ion-padding">
+    <form *ngIf="form" role="form" [formGroup]="form" (ngSubmit)="saveHappening()">
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Public happening
+        </ion-label>
+        <ion-select formControlName="public" type="text" class="form-control">
+          <ion-select-option [value]="0">No</ion-select-option>
+          <ion-select-option [value]="1">Yes</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Happening name
+        </ion-label>
+        <ion-input formControlName="happening_name" type="text" class="form-control"></ion-input>
+      </ion-item>
+  
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Happening information
+        </ion-label>
+        <ion-textarea formControlName="happening_information" class="form-control" id="" cols="30" rows="5"></ion-textarea>
+      </ion-item>
+   
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Happening starts
+        </ion-label>
+        <ion-datetime color="transparent" formControlName="happening_starts" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+      </ion-item>
+      
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Happening ends
+        </ion-label>
+        <ion-datetime color="transparent" formControlName="happening_ends" displayFormat="D MMM YYYY H:mm" [min]="minDate"></ion-datetime>
+      </ion-item>
+      
+      <ion-item color="transparent">
+        <ion-label position="floating">
+          Address
+        </ion-label>
+        <ion-input formControlName="street_address" type="text" class="form-control" placeholder="Street"></ion-input>
+        <ion-input formControlName="zipcode" type="text" class="form-control" placeholder="Zipcode"></ion-input>
+        <ion-input formControlName="city" type="text" class="form-control" placeholder="City"></ion-input>
+      </ion-item>
+      <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="!form.valid">
+        Update happening
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
+<ion-content fullscreen color="tertiary" *ngIf="view == 'invites'">
+  <ion-button expand="block" (click)="openInvite()" color="secondary" class="ion-margin-top ion-margin-bottom">
+    <ion-icon name="person-add-outline" slot="start" class="ion-padding-right"></ion-icon>  Add invite
+  </ion-button>
+  <ion-list *ngIf="happening.invites" color="tertiary">
+    <ion-item-sliding *ngFor="let invite of happening.invites" (click)="openInvite(invite)">
+      <ion-item >
+        <ion-label>
+          <h2>
+            {{invite.invitation_name}}
+          </h2>
+          <p>
+            {{ invite.invitee_email }}
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="start" color="danger">
+        <ion-item-option color="danger" (click)="deleteInvite(invite)">
+          <ion-icon name="trash-outline"></ion-icon> Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,19 +1,33 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title color="tertiary">Me</ion-title>
+    <ion-title>Me</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon size="large" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen class="ion-padding" color="tertiary">
 <ng-container *ngIf="happenings && happenings.length">
-  <ion-card color="secondary" *ngFor="let happening of happenings">
-    <ion-card-header>
-      <ion-card-subtitle>{{ happening.city }}</ion-card-subtitle>
-      <ion-card-title>{{ happening.happening_name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{ happening.happening_information }}
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    <ion-list-header>
+      <h1>
+        My happenings
+      </h1>
+    </ion-list-header>
+    <ion-card mode="md" color="secondary" *ngFor="let happening of happenings" routerLink="/happening/{{happening.uuid}}">
+      <ion-card-header>
+        <ion-card-title>{{ happening.happening_name }}</ion-card-title>
+        <ion-card-subtitle>{{ happening.happening_starts }} - {{ happening.happening_ends }}</ion-card-subtitle>
+        <ion-card-subtitle>{{ happening.city }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ happening.happening_information }}
+      </ion-card-content>
+        
+    </ion-card>
+  </ion-list>
 
 </ng-container>
 </ion-content>

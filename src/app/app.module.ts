@@ -18,6 +18,8 @@ import { CreateHappeningsComponent } from './create/create.component';
 import { DatePipe } from '@angular/common';
 import { ApiRequestInterceptor } from './api-request.interceptor';
 import { MeComponent } from './me/me.component';
+import { HappeningComponent } from './happening/happening.component';
+import { InviteComponent } from './happening/invites/invite.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MeComponent } from './me/me.component';
     HomePage,
     NavbarComponent,
     CreateHappeningsComponent,
-    MeComponent
+    MeComponent,
+    HappeningComponent,
+    InviteComponent
   ],
   entryComponents: [],
   imports: [

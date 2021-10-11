@@ -22,6 +22,7 @@ export class Invites {
     uuid: string;
     invitation_name: string;
     invitation_information: string;
+    invitee_email: string;
     max_attendees: number;
     confirmed_attendees: number;
     happening: Happenings;

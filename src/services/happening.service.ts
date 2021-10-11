@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ContactForm } from "../models/ContactForm";
 import { LoginForm, User } from '../models/User';
-import { Happenings } from '../models/happenings';
+import { Happenings, Invites } from '../models/happenings';
 import { API_BASE_URL } from 'src/config';
 
 @Injectable({
@@ -48,5 +48,10 @@ export class HappeningService {
   changePassword(data: object){
     const url = API_BASE_URL + '/api/auth/password';
     return this.httpClient.patch(url, data);
+  }
+  
+  saveInvite(invite: Invites, happening_uuid: string){
+    const url = API_BASE_URL + '/api/auth/happenings/' + happening_uuid + '/invite';
+    return this.httpClient.post<Invites>(url, invite);
   }
 }
