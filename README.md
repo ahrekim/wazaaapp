@@ -5,10 +5,10 @@ A mobile "demo" application built with Ionic Framework, good starting point for 
 By no means complete, but feel free to tinker around.
 
 ## Requirements
-[wazaaapp-backend](https://github.com/ahrekim/wazaaapp-backend) Laravel project
-NPM
-Angular
-Ionic Framework
+- [wazaaapp-backend](https://github.com/ahrekim/wazaaapp-backend) Laravel project
+- NPM
+- Angular
+- Ionic Framework
 
 ## Instructions
 - Install Angular and Ionic Framework with NPM
