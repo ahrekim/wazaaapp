@@ -5,6 +5,7 @@ import * as L from 'leaflet';
 import { ModalController } from '@ionic/angular';
 import { CreateHappeningsComponent } from '../create/create.component';
 import { HappeningService } from 'src/services/happening.service';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 
 @Component({
@@ -19,15 +20,20 @@ export class HomePage implements OnInit {
   myMap: any;
   timeFilter: string;
   markerLayer: any;
+  loggedIn: boolean = false;
 
   advancedSettingsOpen:boolean;
 
   constructor(
     private geolocation: Geolocation,
     private api: HappeningService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private authService: AuthenticationService
   ) {
     this.timeFilter = "today";
+    this.authService.userLoggedIn.subscribe(status => {
+      this.loggedIn = status;
+    });
   }
 
   async createHappening() {
@@ -52,7 +58,7 @@ export class HomePage implements OnInit {
       }).addTo(this.myMap);
       this.loading = false;
       this.getMapEvents();
-    }, 500);
+    }, 750);
   }
 
 
@@ -60,7 +66,6 @@ export class HomePage implements OnInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.initmap(resp.coords.latitude, resp.coords.longitude)
     }).catch((error) => {
-      console.log('Error getting location', error);
       this.initmap(60.166336, 24.946783)
      });
   }
@@ -79,7 +84,6 @@ export class HomePage implements OnInit {
   }
 
   setTimeFilter(event){
-    console.log(event.detail.value);
     this.timeFilter = event.detail.value;
     this.getMapEvents();
   }

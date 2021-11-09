@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_BASE_URL } from '../config';
 import { ContactForm } from "../models/ContactForm";
@@ -10,7 +10,13 @@ import { LoginForm, User } from '../models/User';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient) { }
+
+  private authenticated = new BehaviorSubject(false);
+  userLoggedIn = this.authenticated.asObservable();
+
+  constructor(private httpClient: HttpClient) {
+    this.authenticated.next(this.isLoggedIn());
+  }
 
   postLoginForm(loginForm: LoginForm): Observable<User> {
     const url = API_BASE_URL + '/api/public/login';
@@ -39,12 +45,14 @@ export class AuthenticationService {
     var user: User = JSON.parse(localStorage.getItem("user"));
     return user;
   }
-
+ß
   setStoredUser(user: User) {
     localStorage.setItem("user", JSON.stringify(user));
+    this.authenticated.next(this.isLoggedIn());
   }
 
   deleteUser() {
     localStorage.removeItem("user");
+    this.authenticated.next(this.isLoggedIn());
   }
 }

@@ -44,7 +44,6 @@ export class CreateHappeningsComponent implements OnInit {
   }
 
   initmap(latitude: number, longitude: number){
-    console.log("map:" + latitude+" "+longitude);
     if(!this.showMap){
       this.showMap = true;
       setTimeout(() => {
@@ -58,7 +57,6 @@ export class CreateHappeningsComponent implements OnInit {
         this.locationMarker = L.marker([latitude, longitude], {draggable: true}).addTo(this.myMap);
         this.locationMarker.on("dragend", (data) => {
           let newLatLng = data.target.getLatLng();
-          console.log(newLatLng);
           this.lat = newLatLng.lat;
           this.lon = newLatLng.lng;
         })
@@ -104,8 +102,6 @@ export class CreateHappeningsComponent implements OnInit {
           // Try to get the address coords
           this.geocoding.getCoordsForHappening(this.happening).subscribe(response => {
             if(response.length){
-              // Get first entry
-              console.log(response[0].lat+", "+response[0].lon);
               // If not same as previous
               if(this.lat != response[0].lat && this.lon != response[0].lon){
                 // Save the coords

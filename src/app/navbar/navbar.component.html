@@ -5,7 +5,7 @@
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="invites">
+    <ion-tab-button tab="invites" *ngIf="loggedIn">
       <ion-icon name="ticket"></ion-icon>
       <ion-label>Invites</ion-label>
     </ion-tab-button>

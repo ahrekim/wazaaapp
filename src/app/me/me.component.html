@@ -3,7 +3,9 @@
     <ion-title>Me</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
-        <ion-icon size="large" name="log-out-outline"></ion-icon>
+        <ion-label color="danger">
+          Logout
+        </ion-label>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,9 +27,14 @@
       <ion-card-content>
         {{ happening.happening_information }}
       </ion-card-content>
-        
     </ion-card>
   </ion-list>
-
 </ng-container>
+<div class="no-happenings" *ngIf="!happenings || !happenings.length">
+  You have no created happenings
+  <br>
+  <a (click)="createHappening()" class="ion-padding-top"> 
+    Create one
+  </a>
+</div>
 </ion-content>

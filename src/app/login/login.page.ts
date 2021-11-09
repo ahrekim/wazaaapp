@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { LoginForm } from 'src/models/User';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { ToasterService } from 'src/services/toaster.service';
@@ -19,7 +20,8 @@ export class LoginPage {
   constructor(
     private authenticationService: AuthenticationService,
     public toaster: ToasterService,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ){
     this.form = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
@@ -31,6 +33,10 @@ export class LoginPage {
     if(this.authenticationService.isLoggedIn()){
       this.router.navigateByUrl("/home");
     }
+  }
+
+  dismiss(){
+    this.modalController.dismiss();
   }
   
   onSubmit() {
@@ -46,17 +52,15 @@ export class LoginPage {
       ).subscribe(
         user => {
           this.toaster.addMessage("Logged in!");
-          console.log(user);
           this.authenticationService.setStoredUser(user);
           // redirect to auth routes
           this.router.navigateByUrl("/navbar");
+          this.dismiss();
         },
         error => {
           this.toaster.addMessage("Login failed");
-          console.log(error.message);
           this.form.enable();
       }
     );
   }
-
 }

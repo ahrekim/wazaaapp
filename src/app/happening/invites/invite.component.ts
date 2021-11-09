@@ -46,7 +46,6 @@ export class InviteComponent implements OnInit {
   }
 
   saveInvite() {
-    console.log(this.invite);
     // Set the form values to model
     this.invite.invitation_name = this.form.getRawValue().invitation_name;
     this.invite.max_attendees = this.form.getRawValue().max_attendees;
@@ -55,7 +54,6 @@ export class InviteComponent implements OnInit {
     this.happeningService.saveInvite(this.invite, this.happening_uuid).subscribe(success => {
       this.toast.addMessage("Invite saved");
     }, error => {
-      console.log(error);
       // Error
       this.toast.addMessage("Error saving invite");
     })

@@ -10,8 +10,6 @@
 </ion-header>
 <ion-content fullscreen class="ion-padding" color="tertiary">
     <form role="form" [formGroup]="form" (ngSubmit)="saveInvite()">
-
-
       <ion-item color="transparent">
         <ion-label position="floating">
           Invitation name
@@ -36,10 +34,8 @@
         </ion-range>
       </ion-item>
  
-
       <ion-button color="primary" expand="block" type="submit" class="ion-margin-top" [disabled]="!form.valid">
         Save invite
       </ion-button>
     </form>
-
 </ion-content>

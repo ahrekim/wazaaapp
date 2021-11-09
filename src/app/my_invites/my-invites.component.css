@@ -13,13 +13,16 @@
     width: 100%;
     height: 250px;
     background-color: var(--ion-color-tertiary);
-}
-
-ion-list{
+  }
+  ion-list{
     background-color: var(--ion-color-tertiary);
 }
 
-.no-happenings {
+ion-card {
+    border: 1px solid var(--ion-color-primary);
+}
+
+.no-invites {
     margin-top: 20%;
     text-align: center;
 }

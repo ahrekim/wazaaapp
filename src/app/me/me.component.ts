@@ -10,6 +10,7 @@ import { Invites } from 'src/models/happenings';
 import { ToastMessage } from 'src/models/ToastMessage';
 import { ModalController, NavController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { CreateHappeningsComponent } from '../create/create.component';
 
 @Component({
   selector: 'me',
@@ -23,8 +24,21 @@ export class MeComponent {
   constructor(
     private authService: AuthenticationService,
     private api: HappeningService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalController: ModalController
   ) {
+  }
+
+  async createHappening() {
+    const modal = await this.modalController.create({
+      component: CreateHappeningsComponent,
+      cssClass: 'my-custom-class'
+    });
+
+    modal.onDidDismiss().then(() => {
+      this.ionViewWillEnter();
+    })
+    return await modal.present();
   }
 
   ionViewWillEnter() {
@@ -35,7 +49,7 @@ export class MeComponent {
 
   logout(){
     this.authService.deleteUser();
-    this.navCtrl.navigateRoot('/login');
+    this.navCtrl.navigateRoot('/');
   }
 }
 

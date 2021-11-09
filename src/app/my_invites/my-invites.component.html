@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title >Invitations</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="ion-padding" color="tertiary">
+  <ion-list *ngIf="invites && invites.length">
+    <ion-list-header>
+      <h1>
+        My invites
+      </h1>
+    </ion-list-header>
+    <ion-card mode="md" color="secondary" *ngFor="let invite of invites">
+      <ion-card-header>
+        <ion-card-title>{{ invite.happening.happening_name }}</ion-card-title>
+        <ion-card-subtitle>{{ invite.happening.happening_starts }} - {{ invite.happening.happening_ends }}</ion-card-subtitle>
+        <ion-card-subtitle>{{ invite.happening.city }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+  <div class="no-invites" *ngIf="!invites || !invites.length">
+    You have no invites
+    <br>
+    <a routerLink="/navbar/home" class="ion-padding-top"> 
+      Browse public happenings
+    </a>
+  </div>
+</ion-content>

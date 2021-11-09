@@ -20,6 +20,7 @@ import { ApiRequestInterceptor } from './api-request.interceptor';
 import { MeComponent } from './me/me.component';
 import { HappeningComponent } from './happening/happening.component';
 import { InviteComponent } from './happening/invites/invite.component';
+import { MyInvitesComponent } from './my_invites/my-invites.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { InviteComponent } from './happening/invites/invite.component';
     CreateHappeningsComponent,
     MeComponent,
     HappeningComponent,
-    InviteComponent
+    InviteComponent,
+    MyInvitesComponent
   ],
   entryComponents: [],
   imports: [

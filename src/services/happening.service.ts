@@ -6,12 +6,16 @@ import { ContactForm } from "../models/ContactForm";
 import { LoginForm, User } from '../models/User';
 import { Happenings, Invites } from '../models/happenings';
 import { API_BASE_URL } from 'src/config';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HappeningService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthenticationService
+    ) { }
 
   me(): Observable<User> {
     const url = API_BASE_URL + '/api/auth/me';
@@ -19,7 +23,11 @@ export class HappeningService {
   }
 
   getMapEvents(filter: string): Observable<Happenings[]> {
-    const url = API_BASE_URL + '/api/auth/events/'+filter;
+    let eventUrl = '/api/public/events/'+filter;
+    if(this.authService.isLoggedIn()){
+      eventUrl = '/api/auth/events/'+filter
+    }
+    const url = API_BASE_URL + eventUrl;
     return this.httpClient.get<Happenings[]>(url);
   }
   
